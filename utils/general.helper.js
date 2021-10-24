@@ -1,3 +1,4 @@
+const R = require('ramda')
 const M = require('monet')
 
 /**
@@ -14,6 +15,26 @@ const trace =
       M.IO(() => x)
     ).run()
 
+/**
+ * @param {*} object 
+ */
+const eitherObjValuesToNumber =
+  (object) =>
+    R.mapObjIndexed(
+      (value, key, obj) => Number(value) ? Number(value) : value,
+      object
+    )
+
+/**
+ * `Tab` generator: to fill the string with tabulation sequence symmetrically
+ * @param {String} marker 
+ */
+const getTabSequence =
+  (marker) =>
+    R.repeat('\t', (3 - Math.round(marker.length / 8) + 2)).join('')
+
 module.exports = {
+  eitherObjValuesToNumber,
+  getTabSequence,
   trace
 }
