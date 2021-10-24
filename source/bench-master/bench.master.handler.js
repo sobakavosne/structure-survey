@@ -25,9 +25,7 @@ const timedFnc =
  */
 const replicateExecution =
   (n, fnc, ...args) =>
-    Array(n)
-      .fill(0)
-      .map(x => fnc(...args))
+    Array(n).fill(0).map(x => fnc(...args))
 
 module.exports = {
   replicateExecution: R.curry(replicateExecution),
