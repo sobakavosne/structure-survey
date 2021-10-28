@@ -7,60 +7,75 @@ const BENCH_MASTER = require('./bench-master/bench.master')
 const BENCH_MASTER_STRUCT = require('./bench-master/bench.master.struct')
 const BENCH_MASTER_HELPER = require('./bench-master/bench.master.helper')
 
-const I_LIST = BENCH_MASTER.baseTimedFnc(
+const I_LIST = BENCH_MASTER.baseTimedFncIO(
   CLI_COLOR.bgBlueBright('IMMUTABLE.JS'),
   ': STRUCTURE GENERATION\t',
   BENCH_MASTER_STRUCT.constructImmutableList,
   ENV.STRUCTURE_SIZE
 )
 
-const MORI_LIST = BENCH_MASTER.baseTimedFnc(
+const MORI_LIST = BENCH_MASTER.baseTimedFncIO(
   CLI_COLOR.bgWhiteBright('MORI.JS'),
   ': STRUCTURE GENERATION\t',
   BENCH_MASTER_STRUCT.constructMoriList,
   ENV.STRUCTURE_SIZE
 )
 
-const NATIVE_LIST = BENCH_MASTER.baseTimedFnc(
+const NATIVE_LIST = BENCH_MASTER.baseTimedFncIO(
   CLI_COLOR.bgGreenBright('NATIVE'),
   ': STRUCTURE GENERATION\t',
   BENCH_MASTER_STRUCT.constructNativeList,
   ENV.STRUCTURE_SIZE
 )
 
-const I_ARRAY = BENCH_MASTER.baseTimedFnc(
+const I_ARRAY = BENCH_MASTER.baseTimedFncIO(
   CLI_COLOR.bgBlueBright('IMMUTABLE.JS'),
   ': CONVERT INTO JS ARRAY\t',
   () => I_LIST.toArray()
 )
 
-const MORI_ARRAY = BENCH_MASTER.baseTimedFnc(
+const MORI_ARRAY = BENCH_MASTER.baseTimedFncIO(
   CLI_COLOR.bgWhiteBright('MORI.JS'),
   ': CONVERT INTO JS ARRAY\t',
   MORI.intoArray,
   MORI_LIST
 )
 
-H.trace(
-  BENCH_MASTER.getMeanBenchmark(
+const identity = (element) => element
+
+const I_LIST_PROCESSED = H.trace(
+  BENCH_MASTER.processStruct(
     ENV.ITERATIONS,
-    () => I_LIST.map(R.identity)
+    () => I_LIST.map(identity)
   ),
   BENCH_MASTER_HELPER.constructMeanBenchmarkDescription('IMMUTABLE.JS')
 )
 
-H.trace(
-  BENCH_MASTER.getMeanBenchmark(
+const MORI_LIST_PROCESSED = H.trace(
+  BENCH_MASTER.processStruct(
     ENV.ITERATIONS,
-    () => MORI.map(R.identity, MORI_LIST)
+    () => MORI.map(identity, MORI_LIST)
   ),
   BENCH_MASTER_HELPER.constructMeanBenchmarkDescription('MORI.JS')
 )
 
-H.trace(
-  BENCH_MASTER.getMeanBenchmark(
+const NATIVE_LIST_PROCESSED = H.trace(
+  BENCH_MASTER.processStruct(
     ENV.ITERATIONS,
-    () => NATIVE_LIST.map(R.identity)
+    () => NATIVE_LIST.map(identity)
   ),
   BENCH_MASTER_HELPER.constructMeanBenchmarkDescription('NATIVE')
+)
+
+BENCH_MASTER.baseTimedFncIO(
+  CLI_COLOR.bgBlueBright('IMMUTABLE.JS'),
+  ': CONVERT PROCESSED STRUCTURE INTO JS ARRAY',
+  () => R.tail(I_LIST_PROCESSED).toArray()
+)
+
+BENCH_MASTER.baseTimedFncIO(
+  CLI_COLOR.bgWhiteBright('MORI.JS'),
+  ': CONVERT PROCESSED STRUCTURE INTO JS ARRAY',
+  MORI.intoArray,
+  R.tail(MORI_LIST_PROCESSED)
 )

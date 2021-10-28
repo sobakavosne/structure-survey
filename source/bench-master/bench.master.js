@@ -10,12 +10,11 @@ const N_BENCHMARK_HANDLER = require('./bench.master.handler')
  * @param {Number} n times
  * @param  {...any} args 
  */
-const getMeanBenchmark =
+const processStruct =
   (n, fnc, ...args) =>
     R.compose(
-      R.divide(R.__, n),
-      R.sum,
-      H.trace,
+      N_BENCHMARK_HANDLER.calculateMeanBench,
+      N_BENCHMARK_HANDLER.processTimedResult,
       () => N_BENCHMARK_HANDLER.replicateExecution(
         n,
         N_BENCHMARK_HANDLER.timedFnc,
@@ -31,7 +30,7 @@ const getMeanBenchmark =
  * @param  {...any} args 
  * @returns `fnc(...args)` result
  */
-const baseTimedFnc =
+const baseTimedFncIO =
   (marker, comments, fnc, ...args) =>
     M.IO(() => console.time(`${marker}${H.getTabSequence(marker)}${comments}`)
     ).takeRight(
@@ -49,6 +48,6 @@ const baseTimedFnc =
     ).run()
 
 module.exports = {
-  getMeanBenchmark,
-  baseTimedFnc
+  processStruct,
+  baseTimedFncIO
 }

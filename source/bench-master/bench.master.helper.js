@@ -9,7 +9,7 @@ const CLI_COLOR = require('cli-color')
  */
 const constructMeanBenchmarkDescription =
   (library) =>
-    `\t: ${library === 'IMMUTABLE.JS'
+    `\t\t\t: ${library === 'IMMUTABLE.JS'
       ? CLI_COLOR.bgBlueBright(library)
       : library === 'MORI.JS'
         ? CLI_COLOR.bgWhiteBright(library)

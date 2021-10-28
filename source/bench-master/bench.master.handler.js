@@ -13,7 +13,7 @@ const timedFnc =
     ).bind(
       (start) => M.IO(() => [start, fnc(...args)])
     ).bind(
-      ([start, _]) => M.IO(() => performance.now() - start)
+      ([start, result]) => M.IO(() => [performance.now() - start, result])
     ).run()
 
 /**
@@ -27,7 +27,27 @@ const replicateExecution =
   (n, fnc, ...args) =>
     Array(n).fill(0).map(x => fnc(...args))
 
+/**
+ * @param {Array} timedResult 
+ */
+const processTimedResult =
+  (timedResult) => [
+    R.head(timedResult),
+    R.compose(R.map(([time, struct]) => time), R.tail)(processTimedResult)
+  ]
+
+/**
+ * @param {Array} processedResult 
+ */
+const calculateMeanBench =
+  (processedResult) => [
+    R.head(processedResult),
+    R.compose(R.sum, R.tail)(processedResult)
+  ]
+
 module.exports = {
   replicateExecution: R.curry(replicateExecution),
-  timedFnc: R.curry(timedFnc)
+  timedFnc: R.curry(timedFnc),
+  processTimedResult,
+  calculateMeanBench
 }
