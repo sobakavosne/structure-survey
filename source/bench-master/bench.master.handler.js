@@ -1,3 +1,6 @@
+require('module-alias')
+
+const H = require('@general-helper')
 const M = require('monet')
 const R = require('ramda')
 
@@ -33,7 +36,7 @@ const replicateExecution =
 const processTimedResult =
   (timedResult) => [
     R.head(timedResult),
-    R.compose(R.map(([time, struct]) => time), R.tail)(processTimedResult)
+    R.compose(R.map(([time, struct]) => time), R.tail)(timedResult)
   ]
 
 /**
