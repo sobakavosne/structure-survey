@@ -37,8 +37,7 @@ const I_ARRAY = BENCH_MASTER.baseTimedFncIO(
 const MORI_ARRAY = BENCH_MASTER.baseTimedFncIO(
   CLI_COLOR.bgWhiteBright('MORI.JS'),
   ': CONVERT INTO JS ARRAY\t',
-  MORI.intoArray,
-  MORI_LIST
+  () => MORI.intoArray(MORI_LIST)
 )
 
 const identity = (element) => element
@@ -80,9 +79,9 @@ const CONVERTED_MORI_LIST = BENCH_MASTER.baseTimedFncIO(
   H.trace(R.head(MORI_LIST_PROCESSED)[1], 'MORILIST')[1]
 )
 
-H.trace(
-  CONVERTED_MORI_LIST,
-  'CONVERTED MORI LIST',
-  CONVERTED_IMMUTABLE_LIST,
-  'CONVERTED IMMUTABLE LIST'
-)
+// H.trace(
+//   CONVERTED_MORI_LIST,
+//   'CONVERTED MORI LIST',
+//   CONVERTED_IMMUTABLE_LIST,
+//   'CONVERTED IMMUTABLE LIST'
+// )
