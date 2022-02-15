@@ -1,3 +1,5 @@
+const L = require('lazy.js')
+const R = require('ramda')
 const I = require('immutable')
 const MORI = require('mori')
 
@@ -25,8 +27,16 @@ const constructNativeList =
   (structureSize) =>
     Array(structureSize).fill(0).map((x, i) => i)
 
+/**
+ * @param {Number} structureSize
+ */
+const constructLazyList =
+  (structureSize) =>
+    L.generate(R.identity).first(structureSize)
+
 module.exports = {
   constructImmutableList,
   constructNativeList,
-  constructMoriList
+  constructMoriList,
+  constructLazyList
 }

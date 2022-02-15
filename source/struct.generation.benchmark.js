@@ -1,0 +1,16 @@
+const H = require('../utils/general.helper')
+const ENV = H.eitherObjValuesToNumber(require('dotenv').config().parsed)
+const MORI = require('mori')
+const DS_GEN = require('./struct-master/data-struct/data.struct.generator')
+const Benchmark = require('benchmark')
+
+new Benchmark
+  .Suite(`\nSturcture Generation. Structure size: ${H.prettyInt(ENV.STRUCT_SIZE)}`)
+  .add('Native     ', () => DS_GEN.constructNativeList(ENV.STRUCT_SIZE))
+  .add('Mori       ', () => MORI.intoArray(DS_GEN.constructMoriList(ENV.STRUCT_SIZE)))
+  .add('Immutable  ', () => DS_GEN.constructImmutableList(ENV.STRUCT_SIZE).toArray())
+  .add('Lazy       ', () => DS_GEN.constructLazyList(ENV.STRUCT_SIZE).toArray())
+  .on('start', (event) => H.trace(event.currentTarget.name))
+  .on('cycle', (event) => H.trace(`   ${String(event.target)}`))
+  .on('complete', (event) => H.trace(` Fastest is ${event.currentTarget.filter("fastest").map("name")}`))
+  .run()
