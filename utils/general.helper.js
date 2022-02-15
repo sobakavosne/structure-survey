@@ -26,15 +26,23 @@ const eitherObjValuesToNumber =
     )
 
 /**
- * `Tab` generator: to fill the string with tabulation sequence symmetrically
- * @param {String} marker 
+ * @param {Number} number 
  */
-const getTabSequence =
-  (marker) =>
-    R.repeat('\t', (3 - Math.round(marker.length / 8) + 2)).join('')
+const prettyInt =
+  (number) =>
+    R.compose(
+      R.join(' '),
+      R.map(R.join('')),
+      R.map(R.reverse),
+      R.reverse,
+      R.splitEvery(3),
+      R.reverse,
+      R.split(''),
+      R.toString
+    )(number)
 
 module.exports = {
   eitherObjValuesToNumber,
-  getTabSequence,
+  prettyInt,
   trace
 }
