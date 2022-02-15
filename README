@@ -1,0 +1,18 @@
+Structure survey
+
+Loading testing for structures: Native JS, Immutable.js, Mori.js, Lazy.js
+
+Structures' implementation:
+
+- Mori.js List
+- Lazy.js Sequence
+- Immutable.js Sequence 
+- Native structure - JS Array
+
+Functions' implementation:
+
+- Ramda 
+- Native JS
+- C++ addons
+
+Requirements: node-gyp

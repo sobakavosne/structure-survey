@@ -4,7 +4,8 @@
   "description": "Observation",
   "main": "source/structure.benchmark.tool.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cppBuild": "node-gyp configure build",
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",
@@ -17,15 +18,23 @@
   },
   "homepage": "https://github.com/lenchevskii/structure-survey#readme",
   "dependencies": {
+    "benchmark": "^2.1.4",
     "cli-color": "^2.0.1",
     "dotenv": "^10.0.0",
+    "express": "^4.17.2",
     "immutable": "^4.0.0",
+    "lazy.js": "^0.5.1",
     "module-alias": "^2.2.2",
     "monet": "^0.9.3",
     "mori": "^0.3.2",
+    "node-addon-api": "^4.3.0",
     "ramda": "^0.27.1"
   },
   "_moduleAliases": {
     "@general-helper": "utils/general.helper.js"
+  },
+  "gypfile": true,
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }
