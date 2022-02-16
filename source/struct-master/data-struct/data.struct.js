@@ -1,6 +1,6 @@
 require('module-alias/register')
 
-const H = require('@general-helper')
+const H = require('@general.helper')
 const ENV = H.eitherObjValuesToNumber(require('dotenv').config().parsed)
 const DS_GEN = require('./data.struct.generator')
 
