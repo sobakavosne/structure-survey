@@ -31,7 +31,7 @@
     "ramda": "^0.27.1"
   },
   "_moduleAliases": {
-    "@general-helper": "utils/general.helper.js"
+    "@general.helper": "utils/general.helper.js"
   },
   "gypfile": true,
   "devDependencies": {
