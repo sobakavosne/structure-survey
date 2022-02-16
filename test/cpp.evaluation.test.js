@@ -1,4 +1,8 @@
 /**
+ * Clear previous initialization (remove log/, build/)
+ */
+require('child_process').execFileSync('node', ['utils/general-cleaner/general.cleaner.tool.js'])
+/**
  * Rebuild C++ addon
  */
 require('child_process').execSync('node-gyp configure rebuild', { stdio: 'ignore' })
