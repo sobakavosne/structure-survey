@@ -16,3 +16,13 @@ Functions' implementation:
 - C++ addons
 
 Requirements: node-gyp
+
+Configuration explained:
+
+DELIMITER=<>              # Start of each string 
+
+STRUCT_MAX=1000000        # Maximum structure size
+STRUCT_STEP=100000        # Structure step decrement
+
+ITER_MAX=2                # Maximum structure size
+ITER_STEP=1               # Structure step decrement
