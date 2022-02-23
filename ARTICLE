@@ -34,7 +34,8 @@ ABBREVIATIONS:  DS - (Persistent) Data Structure (in Native case: used as a pers
 
 Part #1. Introduction
 
-To start our research we have to find out what do mean keywords from the LIBRARIES and FUNCTIONS sections and briefly what is under the hood.
+To start our research we have to find out what do mean keywords from the LIBRARIES 
+and FUNCTIONS sectionsand briefly what is under the hood.
 
 DS libraries:
 
@@ -86,9 +87,12 @@ Part #3. Quality: The impact of function implementation on performance of a DS p
 
 Part #4. Evaluation
 
-There is an unused module - `source/struct-master/data-struct/data.struct.js` - occurred during the development.
-I've found I don't need to use it, but some results was obtained.
-Let's suppose, we replace the direct generation of DSs (in actual module `source/struct-master/bench-suite/suite.generator.js`) with a reference to the `required` module with prebuilt DSs for better semantics. My first thoughts was "this is FP, and nothing can be changed in a transparent lambda-call":
+There is an unused module - `source/struct-master/data-struct/data.struct.js` - occurred 
+during the development. I've found I don't need to use it, but some results was obtained.
+Let's suppose, we replace the direct generation of DSs 
+(in actual module `source/struct-master/bench-suite/suite.generator.js`) with a reference 
+to the `required` module with prebuilt DSs for better semantics. My first thoughts was 
+"this is FP, and nothing can be changed in a transparent lambda-call":
 
 ```js
   `~ source/struct-master/bench-suite/suite.generator.js`
@@ -105,7 +109,8 @@ Let's suppose, we replace the direct generation of DSs (in actual module `source
   ...
 ```
 
-But suddenly, the results were slightly (even much) different ('0 iterations' means there is no iterations over the DS = just DS generation):
+But suddenly, the results were slightly (even much) different ('0 iterations' means there 
+is no iterations over the DS = just DS generation):
 
 ```text
   -- (a) Module 'preloaded' DSs:
@@ -160,4 +165,5 @@ Part #5. Conclusions
 
 ...
 
-> Part #4: The difference between pre-loaded structures and their direct calls is a time for foreign language processing. Typ
+> Part #4: The difference between pre-loaded structures and their direct calls is a time for 
+foreign language processing.
