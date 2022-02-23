@@ -1,0 +1,1 @@
+cmd_Release/obj.target/init.node := g++ -o Release/obj.target/init.node -shared -pthread -rdynamic -m64  -Wl,-soname=init.node -Wl,--start-group Release/obj.target/init/source/cpp-addon/addon.o Release/obj.target/node_modules/node-addon-api/nothing.a -Wl,--end-group 
