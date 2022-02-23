@@ -7,7 +7,7 @@ const MORI = require('mori')
  * @param {Number} structureSize 
  * @returns `Mori.js` **List** 
  */
-const constructMoriList =
+const constructNumMList =
   (structureSize) =>
     MORI.take(structureSize, MORI.range())
 
@@ -15,7 +15,7 @@ const constructMoriList =
 * @param {Number} structureSize 
 * @returns {I.Seq} `Immutable.js` **Seq**
 */
-const constructImmutableList =
+const constructNumIList =
   (structureSize) =>
     I.Range().take(structureSize)
 
@@ -23,20 +23,20 @@ const constructImmutableList =
 * @param {Number} structureSize 
 * @returns {Array<Number>} `Native` **Array**
 */
-const constructNativeList =
+const constructNumNList =
   (structureSize) =>
     Array(structureSize).fill(0).map((x, i) => i)
 
 /**
  * @param {Number} structureSize
  */
-const constructLazyList =
+const constructNumLList =
   (structureSize) =>
     L.generate(R.identity).first(structureSize)
 
 module.exports = {
-  constructImmutableList,
-  constructNativeList,
-  constructMoriList,
-  constructLazyList
+  constructNumIList,
+  constructNumNList,
+  constructNumMList,
+  constructNumLList
 }

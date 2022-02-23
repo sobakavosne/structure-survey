@@ -5,8 +5,8 @@ const ENV = H.eitherObjValuesToNumber(require('dotenv').config().parsed)
 const DS_GEN = require('./data.struct.generator')
 
 module.exports = {
-  I_LIST: DS_GEN.constructImmutableList(ENV.STRUCT_SIZE),
-  M_LIST: DS_GEN.constructMoriList(ENV.STRUCT_SIZE),
-  N_LIST: DS_GEN.constructNativeList(ENV.STRUCT_SIZE),
-  L_LIST: DS_GEN.constructLazyList(ENV.STRUCT_SIZE)
+  I_LIST: DS_GEN.constructIList(ENV.STRUCT_MAX),
+  M_LIST: DS_GEN.constructMList(ENV.STRUCT_MAX),
+  N_LIST: DS_GEN.constructNList(ENV.STRUCT_MAX),
+  L_LIST: DS_GEN.constructLList(ENV.STRUCT_MAX)
 }
