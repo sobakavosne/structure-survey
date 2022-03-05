@@ -26,6 +26,13 @@ const eitherObjValuesToNumber =
     )
 
 /**
+ * @param {Array} list 
+ */
+const eitherListValuesToNumber =
+  (list) =>
+    list.map(x => Number(x) ? Number(x) : x)
+
+/**
  * @param {Number} number 
  */
 const prettyInt =
@@ -42,6 +49,7 @@ const prettyInt =
     )(number)
 
 module.exports = {
+  eitherListValuesToNumber,
   eitherObjValuesToNumber,
   prettyInt,
   trace
