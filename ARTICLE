@@ -1,9 +1,11 @@
 TITLE(1/2):     The impact of Persistent Data Structures on JavaScript performance
 
-TITLE(2/2):     The impact of function implementation on performance of a Persistent Data Structure processing
+TITLE(2/2):     The impact of function implementation on performance of a Persistent 
+                Data Structure processing
 
-ABSTRACT:       The research is aimed to find quantitative (structure size) and qualitative (implementation) 
-                dependencies for persistent data structures on JavaScript V8 execution via Node.js
+ABSTRACT:       The research is aimed to find quantitative (structure size) and qualitative  
+                (implementation) dependencies for persistent data structures on JavaScript 
+                V8 execution via Node.js
 
 NOTE:           This is only about pure functional not about imperative 
                 (On each level of implementation as possible)
@@ -32,138 +34,167 @@ ABBREVIATIONS:  DS - (Persistent) Data Structure (in Native case: used as a pers
                 D  - Lodash     - Lodash.js
                 A  - Addon      - C++ Addon
 
-Part #1. Introduction
+Part #1.  Introduction
 
-To start our research we have to find out what do mean keywords from the LIBRARIES 
-and FUNCTIONS sectionsand briefly what is under the hood.
+  To start our research we have to find out what do mean keywords from the LIBRARIES 
+  and FUNCTIONS sectionsand briefly what is under the hood.
 
-DS libraries:
+  DS libraries:
 
-- [Mori](http://swannodette.github.io/mori/): 
-    Core is written in ClojureScript (JS platform for Clojure) => evaluation phases: 
-      Clojure -> ClojureScript -> JavaScript -> execution
+  - [Mori](http://swannodette.github.io/mori/): 
+      Core is written in ClojureScript (JS platform for Clojure) => evaluation phases: 
+        Clojure -> ClojureScript -> JavaScript -> execution
 
-- [Lazy](https://danieltao.com/lazy.js/):
-    Core is written in JavaScript => evaluation phases: 
-      JavaScript -> execution
+  - [Lazy](https://danieltao.com/lazy.js/):
+      Core is written in JavaScript => evaluation phases: 
+        JavaScript -> execution
 
-- [Native](https://www.javascript.com/):
-    JavaScript in-built DSs => evaluation phases: 
-      'direct' execution
+  - [Native](https://www.javascript.com/):
+      JavaScript in-built DSs => evaluation phases: 
+        'direct' execution
 
-- [Immutable](https://immutable-js.com/):
-    Core is written in TypeScript => evaluation phases: 
-      TypeScript -> JavaScript -> execution
+  - [Immutable](https://immutable-js.com/):
+      Core is written in TypeScript => evaluation phases: 
+        TypeScript -> JavaScript -> execution
 
-Function libraries:
+  Function libraries:
 
-- [Ramda](https://ramdajs.com/):
-    Core is written in JavaScript => evaluation phases: 
-      JavaScript -> execution
+  - [Ramda](https://ramdajs.com/):
+      Core is written in JavaScript           => evaluation phases: 
+        JavaScript -> execution
 
-- [Lodash](https://lodash.com/)
-    Core is written in JavaScript => evaluation phases: 
-      JavaScript -> execution
+  - [Lodash](https://lodash.com/)
+      Core is written in JavaScript           => evaluation phases: 
+        JavaScript -> execution
 
-- [Underscore](http://underscorejs.org/)
-    Core is written in JavaScript => evaluation phases: 
-      JavaScript -> execution
+  - [Underscore](http://underscorejs.org/)
+      Core is written in JavaScript           => evaluation phases: 
+        JavaScript -> execution
 
-- [Native](https://www.javascript.com/):
-    JavaScript in-built function interface => evaluation phases: 
-      direct execution
+  - [Native](https://www.javascript.com/):
+      JavaScript in-built function interface  => evaluation phases: 
+        direct execution
 
-- [C++Addon](https://nodejs.org/api/n-api.html):
-    Node.js in-built API => evaluation phases: 
-      C++ -> Node API (via ES "Agent" - self-contained env.) -> JavaScript -> execution
+  - [C++Addon](https://nodejs.org/api/n-api.html):
+      Node.js in-built API => evaluation phases: 
+        C++ -> Node API (ES "Agent") -> JavaScript -> execution
 
-Part #2. Quantity: The impact of DS size on JS performance
+Part #2.  Data grid description
 
-...
+  Parameters: 
 
-Part #3. Quality: The impact of function implementation on performance of a DS processing
+    fnc   - Function used to iterate over a DS
+    lib   - Type of the library from which function is originated
+    iter  - Number of iterations over a DS: 0 - just generation, 1 ...
+    size  - Size of a DS
 
-...
+  Data Structure implementation:  | Function implementation:
+                                  |
+    Mori      - Green             |   Ramda       - Green
+    Lazy      - Grey              |   Lodash      - Grey
+    Native    - Yellow            |   Native      - Yellow 
+    Immutable - Red               |   Underscore  - Blue
+                                  |   C++ Addon   - Red
 
-Part #4. Evaluation
+  Result form (3d-presented):     | Cases:
+                                  | 
+    X - size, items               |   Structure library - Functions
+    Y - iteration, times          |   Function library  - Structures
+    Z - speed, op/sec             |
 
-There is an unused module - `source/struct-master/data-struct/data.struct.js` - occurred 
-during the development. I've found I don't need to use it, but some results was obtained.
-Let's suppose, we replace the direct generation of DSs 
-(in actual module `source/struct-master/bench-suite/suite.generator.js`) with a reference 
-to the `required` module with prebuilt DSs for better semantics. My first thoughts was 
-"this is FP, and nothing can be changed in a transparent lambda-call":
-
-```js
-  `~ source/struct-master/bench-suite/suite.generator.js`
-  
-  ...
-  const DS = require('../data-struct/data.struct')
-  ...
-  const listSuiteConstructorIO =
-  ...
-            .add('Mori       ', () => MORI.intoArray(SG_HANDLER.repeatMoriMap(iterations, DS.M_LIST, fnc)))
-            .add('Lazy       ', () => SG_HANDLER.repeatMap(iterations, DS.L_LIST, fnc).toArray())
-            .add('Native     ', () => SG_HANDLER.repeatMap(iterations, DS.N_LIST, fnc))
-            .add('Immutable  ', () => SG_HANDLER.repeatMap(iterations, DS.I_LIST, fnc).toArray())
-  ...
-```
-
-But suddenly, the results were slightly (even much) different ('0 iterations' means there 
-is no iterations over the DS = just DS generation):
-
-```text
-  -- (a) Module 'preloaded' DSs:
-  0 iterations via  Add. Structure size: 10 000
-     Mori        x 2,152 ops/sec ±3.44% (82 runs sampled)
-     Lazy        x 477 ops/sec ±1.98% (86 runs sampled)
-     Native      x 610,005,526 ops/sec ±1.88% (79 runs sampled)
-     Immutable   x 17,821 ops/sec ±3.35% (85 runs sampled)
-   Fastest is Native     
-  
-  -- (b) Direct generated DSs:
-  0 iterations via  Add. Structure size: 10 000
-     Mori        x 497 ops/sec ±2.22% (76 runs sampled)
-     Lazy        x 461 ops/sec ±2.89% (83 runs sampled)
-     Native      x 9,394 ops/sec ±15.93% (85 runs sampled)
-     Immutable   x 16,258 ops/sec ±3.62% (80 runs sampled)
-   Fastest is Immutable
-```
-
-Legend: (a) pre-built call, (b) in-built call.
-
-```text
-  Native:
-    (a) 610,005,526 ops/sec   - JS fully evaluates native code while it's loaded with `require` 
-                                and runs conditionally `empty` test
-         >>
-    (b) 9,394 ops/sec         - JS manages function tree as an argument
-  
-  Lazy:
-    (a) 477 ops/sec           - JS generates lazy list loaded via 'require', but doesn't run it 
-                                until list becomes an argument
-         ≈
-    (b) 461 ops/sec           - JS manages lazy list as an argument. Almost the same because of the 
-                                transparent JS
-  
-  Immutable:
-    (a) 17,821 ops/sec        - TypeScript sugar compiles before loading
-         >≈
-    (b) 16,258 ops/sec        - TypeScript is processed inside the call
-  
-  Mori:
-    (a) 2,152 ops/sec         - Clojure compilation is occurred in module pre-builing
-         >
-    (b) 497 ops/sec           - Clojure is processed inside the call
-```
-
-Native pre-build (a) DS approaches infinity because there is nothing to call - list is already an array.
-Lazy DSs are almost same because of the laziness: the little difference is a time for drawing function tree.
-Immutable and Mori have foreing convertion which is occurred with a first call.
-
-Part #5. Conclusions
+Part #3.  Quantity: The impact of DS size on JS performance
 
 ...
 
-> Part #4: The difference between pre-loaded structures and their direct calls is a time for 
+Part #4.  Quality: The impact of function implementation on performance of a DS processing
+
+     #4.1 Case: Structure library - Functions
+
+        ...
+
+     #4.2 Case: Function library - Structures
+
+        ...
+
+Part #5.  Evaluation
+
+  There is an unused module - `source/struct-master/data-struct/data.struct.js` - occurred 
+  during the development. I've found I don't need to use it, but some results was obtained.
+  Let's suppose, we replace the direct generation of DSs 
+  (in actual module `source/struct-master/bench-suite/suite.generator.js`) with a reference 
+  to the `required` module with prebuilt DSs for better semantics. My first thoughts was 
+  "this is FP, and nothing can be changed in a transparent lambda-call":
+
+  ```js
+    `~ source/struct-master/bench-suite/suite.generator.js`
+
+    ...
+    const DS = require('../data-struct/data.struct')
+    ...
+    const listSuiteConstructorIO =
+    ...
+              .add('Mori       ', () => MORI.intoArray(SG_HANDLER.repeatMoriMap(iterations, DS.M_LIST, fnc)))
+              .add('Lazy       ', () => SG_HANDLER.repeatMap(iterations, DS.L_LIST, fnc).toArray())
+              .add('Native     ', () => SG_HANDLER.repeatMap(iterations, DS.N_LIST, fnc))
+              .add('Immutable  ', () => SG_HANDLER.repeatMap(iterations, DS.I_LIST, fnc).toArray())
+    ...
+  ```
+
+  But suddenly, the results were slightly (even much) different ('0 iterations' means there 
+  is no iterations over the DS = just DS generation):
+
+  ```text
+    -- (a) Module 'preloaded' DSs:
+    0 iterations via  Add. Structure size: 10 000
+       Mori        x 2,152 ops/sec ±3.44% (82 runs sampled)
+       Lazy        x 477 ops/sec ±1.98% (86 runs sampled)
+       Native      x 610,005,526 ops/sec ±1.88% (79 runs sampled)
+       Immutable   x 17,821 ops/sec ±3.35% (85 runs sampled)
+     Fastest is Native     
+
+    -- (b) Direct generated DSs:
+    0 iterations via  Add. Structure size: 10 000
+       Mori        x 497 ops/sec ±2.22% (76 runs sampled)
+       Lazy        x 461 ops/sec ±2.89% (83 runs sampled)
+       Native      x 9,394 ops/sec ±15.93% (85 runs sampled)
+       Immutable   x 16,258 ops/sec ±3.62% (80 runs sampled)
+     Fastest is Immutable
+  ```
+
+  Legend: (a) pre-built call, (b) in-built call.
+
+  ```text
+    Native:
+      (a) 610,005,526 ops/sec   - JS fully evaluates native code while it's loaded with `require` 
+                                  and runs conditionally `empty` test
+           >>
+      (b) 9,394 ops/sec         - JS manages function tree as an argument
+
+    Lazy:
+      (a) 477 ops/sec           - JS generates lazy list loaded via 'require', but doesn't run it 
+                                  until list becomes an argument
+           ≈
+      (b) 461 ops/sec           - JS manages lazy list as an argument. Almost the same because of the 
+                                  transparent JS
+
+    Immutable:
+      (a) 17,821 ops/sec        - TypeScript sugar compiles before loading
+           >≈
+      (b) 16,258 ops/sec        - TypeScript is processed inside the call
+
+    Mori:
+      (a) 2,152 ops/sec         - Clojure compilation is occurred in module pre-builing
+           >
+      (b) 497 ops/sec           - Clojure is processed inside the call
+  ```
+
+  Native pre-build (a) DS approaches infinity because there is nothing to call - list is already an array.
+  Lazy DS are almost the same because of the laziness: the difference is a time for drawing function tree.
+  Immutable and Mori have foreing convertion which is occurred with a first call.
+
+Part #6. Conclusions
+
+...
+
+> Regarding Part #5: The difference between pre-loaded structures and their direct calls is a time for 
 foreign language processing.
