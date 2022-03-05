@@ -16,7 +16,7 @@ const logDirBuilder =
 */
 const logFileNameBuilder =
   (root, fncName, library, iterations, structSize, structName) =>
-    `${root}/../../log/${structName}/{"fnc":"${fncName}","lib":"${library}","iter":${iterations},"size":${structSize}}.log`
+    `${root}/../../log/${structName}/{"fnc":"${fncName}","lib":"${library}","iter":${iterations},"size":${structSize}}`
 
 module.exports = {
   logFileNameBuilder,

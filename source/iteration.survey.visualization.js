@@ -1,14 +1,17 @@
-const H = require('../utils/general.helper')
-const ENV = H.eitherObjValuesToNumber(require('dotenv').config().parsed)
 const SURVEY_VISUALIZATION = require('./survey-visualizaiton/survey.visualization')
 
-SURVEY_VISUALIZATION.createGeneration(
-  'source/struct-master/struct.iteration.benchmark.js',
-  ENV.STRUCT_SIZE,
-  ENV.STRUCT_GEN_STEP
+SURVEY_VISUALIZATION.createBenchGridIO(
+  'source/struct-master/number.list.itaration.bench.js'
 ).on(
   'exit',
   (code, signal) => code === 0
-    ? SURVEY_VISUALIZATION.visualizeExperiment('iteration')
-    : undefined
+    ? SURVEY_VISUALIZATION
+      .visualizeExperimentIO(
+        'benchmark-visualizer/benchmark_visualizer.py'
+      ) : console.error('Grid creation IO error.')
+).on(
+  'exit',
+  (code, signal) => code === 0
+    ? console.log('Well done.')
+    : console.error('Visualisation IO error.')
 )
