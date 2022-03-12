@@ -104,7 +104,7 @@ dist
 .tern-port
 
 # Log files
-log/
+# log/
 
 # Python cache
 __pycache__

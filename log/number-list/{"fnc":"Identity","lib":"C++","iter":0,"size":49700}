@@ -1,0 +1,1 @@
+<> 0 iterations via  Identity. Structure size: 49 700<>    Mori        x 53.86 ops/sec ±13.66% (47 runs sampled)<>    Lazy        x 93.68 ops/sec ±1.88% (77 runs sampled)<>    Native      x 982 ops/sec ±1.44% (66 runs sampled)<>    Immutable   x 1,543 ops/sec ±1.62% (84 runs sampled)<>  Fastest is Immutable  
