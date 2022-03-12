@@ -314,7 +314,7 @@ endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
 cmd_regen_makefile = cd $(srcdir); /home/dzmitry/.nvm/versions/node/v16.13.2/lib/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/home/dzmitry/.cache/node-gyp/16.13.2" "-Dnode_gyp_dir=/home/dzmitry/.nvm/versions/node/v16.13.2/lib/node_modules/node-gyp" "-Dnode_lib_file=/home/dzmitry/.cache/node-gyp/16.13.2/<(target_arch)/node.lib" "-Dmodule_root_dir=/home/dzmitry/dev/javascript/structure-survey" "-Dnode_engine=v8" "--depth=." "-Goutput_dir=." "--generator-output=build" -I/home/dzmitry/dev/javascript/structure-survey/build/config.gypi -I/home/dzmitry/.nvm/versions/node/v16.13.2/lib/node_modules/node-gyp/addon.gypi -I/home/dzmitry/.cache/node-gyp/16.13.2/include/node/common.gypi "--toplevel-dir=." binding.gyp
-Makefile: $(srcdir)/build/config.gypi $(srcdir)/../../../.cache/node-gyp/16.13.2/include/node/common.gypi $(srcdir)/binding.gyp $(srcdir)/../../../.nvm/versions/node/v16.13.2/lib/node_modules/node-gyp/addon.gypi $(srcdir)/node_modules/node-addon-api/node_api.gyp
+Makefile: $(srcdir)/../../../.cache/node-gyp/16.13.2/include/node/common.gypi $(srcdir)/../../../.nvm/versions/node/v16.13.2/lib/node_modules/node-gyp/addon.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp $(srcdir)/node_modules/node-addon-api/node_api.gyp
 	$(call do_cmd,regen_makefile)
 
 # "all" is a concatenation of the "all" targets from all the included
