@@ -1,5 +1,5 @@
 /**
- * ITER_MAX, ITER_STEP, STRUCT_MAX, STRUCT_STEP - command line options required
+ * STRUCT_MAX, STRUCT_STEP - command line options required
  * A - C++ Addon abbreviation
  */
 
