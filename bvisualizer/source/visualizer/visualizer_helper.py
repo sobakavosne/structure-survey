@@ -10,7 +10,7 @@ import utility.general_helper as H
 
 DOTENV.load_dotenv('.env')
 
-PATTERN = RE.compile("\s+(\S+)\s+ x ([\d.]+) [\D]*", RE.IGNORECASE)
+PATTERN = RE.compile("\s+(\S+)\s+", RE.IGNORECASE)
 DELIMITER = OS.getenv('DELIMITER')
 N_LIST_LOG_DIR = OS.getenv('N_LIST_LOG_DIR')
 
@@ -19,35 +19,38 @@ def read_directoryIO(dir):
     return H.head([x[2] for x in OS.walk(dir)])
 
 
-def construct_wrapped_data_list(collection):
+def construct_wrapped_data_list(l):
     """
     return [[FILE_NAME, WRAPPED_DATA]]
     """
     return map(lambda file_name: [
         JSON.loads(file_name),
         open(OS.path.join(N_LIST_LOG_DIR, file_name))
-    ], collection)
+    ], l)
 
 
-def unwrap_data(collection):
+def unwrap_data(l):
     """
     return [[FILE_NAME, UNWRAPPED_DATA]]
     """
     return map(lambda bench_case: [
         H.head(bench_case),
         H.filter_empty_list(bench_case[1].readlines()[0].split(DELIMITER))
-    ], collection)
+    ], l)
 
 
-def extract_test_results(collection):
+def extract_test_results(l):
     return map(lambda bench_case: [
         H.head(bench_case),
-        H.filter_empty_list([PATTERN.findall(line) for line in bench_case[1]])
-    ], collection)
+        H.filter_empty_list([PATTERN.findall(line)[:-2]
+                            for line in bench_case[1]][1:-1])
+    ], l)
 
 
-def annotate3D(ax, s, *args, **kwargs):
-    '''add anotation text s to to Axes3d ax'''
-
-    tag = Annotation3D(s, *args, **kwargs)
-    ax.add_artist(tag)
+def filter_test_results(l):
+    return map(lambda bench_case: [
+        H.head(bench_case),
+        list(map(lambda lib_case: [
+            H.head(lib_case),
+            int(H.last(lib_case).replace(',', ''))], H.last(bench_case)))
+    ], l)
