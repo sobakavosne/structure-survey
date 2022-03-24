@@ -19,11 +19,11 @@ const N = require('../native/native.functions')
 const A = require('../../build/Release/init')
 const SUITE_GENERATOR = require('./bench-suite/suite.generator')
 
-SUITE_GENERATOR
-  .numListSuiteIO(A.identity, 'Identity', `C++`, true)
+// SUITE_GENERATOR
+//   .numListSuiteIO(A.identity, 'Identity', `C++`, true)
 
-SUITE_GENERATOR
-  .numListSuiteIO(R.identity, 'Identity', 'Ramda', true)
+// SUITE_GENERATOR
+//   .numListSuiteIO(R.identity, 'Identity', 'Ramda', true)
 
 SUITE_GENERATOR
   .numListSuiteIO(N.identity, 'Identity', `Native`, true)

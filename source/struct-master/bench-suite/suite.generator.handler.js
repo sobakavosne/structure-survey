@@ -21,7 +21,6 @@ const makeMatrixList =
           new Array(Math.round(1 + structSize / structStep))
             .fill(0)
             .map((x, i) => [iterations, i * structStep])
-            .slice(1)
       )
 
 /**
