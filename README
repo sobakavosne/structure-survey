@@ -12,6 +12,7 @@ Structures' implementation:
 Functions' implementation:
 
 - Ramda 
+- Lodash
 - Native JS
 - C++ addons
 
