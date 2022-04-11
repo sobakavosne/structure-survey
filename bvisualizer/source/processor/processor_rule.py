@@ -2,7 +2,7 @@ import sys as SYS
 
 
 SYS.path.append('./bvisualizer')
-import utility.general_helper as H
+import utils.general_helper as H
 
 
 rule_lib = lambda struct_case: H.head(struct_case)['lib']

@@ -8,7 +8,7 @@ import itertools as I
 
 DOTENV.load_dotenv('.env')
 SYS.path.append('./bvisualizer')
-import utility.general_helper as H
+import utils.general_helper as H
 
 
 PATTERN = RE.compile("\s+(\S+)\s+", RE.IGNORECASE)
@@ -69,17 +69,39 @@ def group_bench_cases(rule):
   ]
 
 
-def map_fst_depth(fnc): return lambda l: map(fnc, l)
+def map_frst_depth(fnc): return lambda l: map(fnc, l)
 
 
 def map_scnd_depth(fnc): return lambda l: map(lambda x: map(fnc, x), l)
 
 
-def deep_map(depth, fnc): 
-  """
-  -- decsends to a depth of 'depth' value
-  """
-  return lambda l: [deep_map(depth - 1, fnc)(*l)] if depth > 1 else list(map(fnc, l))
+def map_thrd_depth(fnc): 
+  return lambda l: map(
+    lambda x: map(
+      lambda y: map(fnc, y), 
+      x), 
+    l)
+
+
+def map_frth_depth(fnc): 
+  return lambda l: map(
+    lambda x: map(
+      lambda y: map(
+        lambda z: map(fnc, z), 
+        y), 
+      x), 
+    l)
+
+
+def map_ffth_depth(fnc): 
+  return lambda l: map(
+    lambda a: map(
+      lambda b: map(
+        lambda c: map(
+          lambda d: map(fnc, d), c), 
+        b), 
+      a), 
+    l)
 
 
 def sort_thrd_depth(rule): 
@@ -93,9 +115,27 @@ def sort_thrd_depth(rule):
   )
 
 
-def list_it(l):
-  """
-  -- recursively apply list() to all elements in the collection
-  """ 
-  return list(map(lambda x: list_it(x), l)) if type(l) == (map or list or filter) else l
+def construct_lib_specific_fnc_to_struct_correspondence(lib_number):
+  return lambda bench_case: [
+    list(map(lambda x: x, H.last(bench_case)[lib_number]))
+  ]
 
+
+def destruct_list(l): 
+  [value] = l
+  return value
+
+
+def construct_struct_to_fnc_matrix(bench_case):
+  return [
+    H.head(bench_case),
+    list(map(lambda x: x, H.last(bench_case)))
+  ]
+
+
+def deep_map(depth, fnc): 
+  """
+  -- decsends to a depth of 'depth' value
+  -- (find breaking reason)
+  """
+  return lambda l: [deep_map(depth - 1, fnc)(*l)] if depth > 1 else list(map(fnc, l))
