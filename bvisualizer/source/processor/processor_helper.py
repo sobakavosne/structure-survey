@@ -4,6 +4,7 @@ import sys as SYS
 import json as JSON
 import dotenv as DOTENV
 import itertools as I
+import processor_rule as P_RULE
 
 
 DOTENV.load_dotenv('.env')
@@ -139,3 +140,22 @@ def deep_map(depth, fnc):
   -- (find breaking reason)
   """
   return lambda l: [deep_map(depth - 1, fnc)(*l)] if depth > 1 else list(map(fnc, l))
+
+
+def remove_zero_entry_data(l):
+  [head, *tail] = l
+  return tail
+
+
+def extract_label(ruled_list):
+  return map(
+      H.compose(P_RULE.rule_fnc_lib, H.head, H.head, H.head), 
+      H.list_it(ruled_list)
+    )
+
+
+def set_label(final_matrix):
+  return lambda label_list: {
+      str(label_list[i]): final_matrix[i] 
+      for i in range(len(final_matrix))
+    }

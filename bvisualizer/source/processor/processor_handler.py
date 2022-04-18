@@ -6,20 +6,12 @@ import processor_rule as P_RULE
 import processor_helper as P_HELPER
 
 
-SYS.path.append('./bvisualizer')
-import utils.general_helper as H
-
-
 DOTENV.load_dotenv('.env')
 
-MORI_NUM = int(OS.getenv('MORI_NUM'))
-LAZY_NUM = int(OS.getenv('LAZY_NUM'))
-NATIVE_NUM = int(OS.getenv('NATIVE_NUM'))
-IMMUTABLE_NUM = int(OS.getenv('IMMUTABLE_NUM'))
+N_LIST_LOG_DIR = OS.getenv('N_LIST_LOG_DIR')
 
-# X - size, items
-# Y - iteration, times
-# Z - speed, op/sec
+SYS.path.append('./bvisualizer')
+import utils.general_helper as H
 
 
 def prepareBenchDataIO(log_dir):
@@ -32,10 +24,29 @@ def prepareBenchDataIO(log_dir):
   )(log_dir)
 
 
+def construct_fnc_to_struct_case(lib_number):
+  return lambda prepared_list: H.compose(
+      lambda final_matrix: [final_matrix, prepareBenchDataIO(N_LIST_LOG_DIR)],
+      H.list_it,
+      P_HELPER.map_frst_depth(P_HELPER.remove_zero_entry_data),
+      P_HELPER.map_scnd_depth(P_HELPER.remove_zero_entry_data),
+      P_HELPER.map_frst_depth(P_HELPER.destruct_list),
+      P_HELPER.map_frth_depth(P_HELPER.destruct_list),
+      P_HELPER.map_ffth_depth(H.last),
+      P_HELPER.map_frth_depth(P_HELPER.construct_lib_specific_fnc_to_struct_correspondence(lib_number)),
+      P_HELPER.sort_thrd_depth(P_RULE.rule_size),
+      P_HELPER.map_scnd_depth(P_HELPER.group_bench_cases(P_RULE.rule_iter)),
+      P_HELPER.map_frst_depth(P_HELPER.group_bench_cases(P_RULE.rule_fnc)),
+      P_HELPER.group_bench_cases(P_RULE.rule_lib)
+    )(prepared_list)
+
+
 # def construct_struct_to_fnc_case(lib_number):
-#   return lambda l: H.compose(
-#       H.trace,
+#   return lambda prepared_list: H.compose(
+#       lambda final_matrix: [final_matrix, prepareBenchDataIO(N_LIST_LOG_DIR)],
 #       H.list_it,
+#       P_HELPER.map_frst_depth(P_HELPER.remove_zero_entry_data),
+#       P_HELPER.map_scnd_depth(P_HELPER.remove_zero_entry_data),
 #       P_HELPER.map_frst_depth(P_HELPER.destruct_list),
 #       P_HELPER.map_frth_depth(P_HELPER.destruct_list),
 #       P_HELPER.map_ffth_depth(H.last),
@@ -44,19 +55,17 @@ def prepareBenchDataIO(log_dir):
 #       P_HELPER.map_scnd_depth(P_HELPER.group_bench_cases(P_RULE.rule_iter)),
 #       P_HELPER.map_frst_depth(P_HELPER.group_bench_cases(P_RULE.rule_fnc)),
 #       P_HELPER.group_bench_cases(P_RULE.rule_lib)
-#     )(l)
+#     )(prepared_list)
 
 
-def construct_fnc_to_struct_case(lib_number):
-  return lambda l: H.compose(
-      H.trace,
-      H.list_it,
-      # P_HELPER.map_frst_depth(P_HELPER.destruct_list),
-      # P_HELPER.map_frth_depth(P_HELPER.destruct_list),
-      # P_HELPER.map_ffth_depth(H.last),
-      # P_HELPER.map_frth_depth(P_HELPER.construct_lib_specific_fnc_to_struct_correspondence(lib_number)),
-      P_HELPER.sort_thrd_depth(P_RULE.rule_size),
-      P_HELPER.map_scnd_depth(P_HELPER.group_bench_cases(P_RULE.rule_iter)),
-      P_HELPER.map_frst_depth(P_HELPER.group_bench_cases(P_RULE.rule_fnc)),
-      P_HELPER.group_bench_cases(P_RULE.rule_lib)
-    )(l)
+def set_case_label(compounded_list):
+  [final_matrix, prepared_list] = compounded_list
+  return H.compose(
+    P_HELPER.set_label(final_matrix),
+    list,
+    P_HELPER.extract_label,
+    P_HELPER.sort_thrd_depth(P_RULE.rule_size),
+    P_HELPER.map_scnd_depth(P_HELPER.group_bench_cases(P_RULE.rule_iter)),
+    P_HELPER.map_frst_depth(P_HELPER.group_bench_cases(P_RULE.rule_fnc)),
+    P_HELPER.group_bench_cases(P_RULE.rule_lib)
+  )(prepared_list)

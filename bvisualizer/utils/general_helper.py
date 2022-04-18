@@ -26,3 +26,6 @@ def list_it(l):
   """ 
   return list(map(lambda x: list_it(x), l)) if type(l) \
     == (map or list or filter) else l
+
+
+def double_list(l): return [l, l]
