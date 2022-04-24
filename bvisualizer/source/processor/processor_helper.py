@@ -117,9 +117,16 @@ def sort_thrd_depth(rule):
 
 
 def construct_lib_specific_fnc_to_struct_correspondence(lib_number):
+  """
+  -- choose the libriry specified by `lib_number`
+  """
   return lambda bench_case: [
     list(map(lambda x: x, H.last(bench_case)[lib_number]))
   ]
+
+
+def construct_fnc_specific_struct_to_fnc_correspondence(fnc_number):
+  pass
 
 
 def destruct_list(l): 

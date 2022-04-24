@@ -11,13 +11,28 @@ import utils.general_helper as H
 # return H.trace(labeled_matrix)
 
 
-def run_fnc_to_struct_processorIO(log_dir, lib_number):
+def run_fnc_to_struct_processor_IO(log_dir, lib_number):
   """
-  -- construct `function to structre` correspondence
+  -- construct `function to structre` relation
+  -- the relation shows the effect of the function implementation
   returns list of type [{"{'fnc': FNC, 'lib': LIB }": [[speed]]}]
   """
   return H.compose(
     P_HANDLER.set_case_label,
     P_HANDLER.construct_fnc_to_struct_case(lib_number),
-    P_HANDLER.prepareBenchDataIO
+    P_HANDLER.prepare_bench_data_IO
+  )(log_dir)
+
+
+def run_struct_to_fnc_processor_IO(log_dir, lib_number):
+  """
+  -- construct `structure to function` relation
+  -- the relation shows the effect of the structure implemention
+  # returns list of type [{"{'fnc': FNC, 'lib': LIB }": [[speed]]}]
+  """
+  return H.compose(
+    H.trace,
+    P_HANDLER.set_case_label,
+    P_HANDLER.construct_struct_to_fnc_case(lib_number),
+    P_HANDLER.prepare_bench_data_IO
   )(log_dir)
