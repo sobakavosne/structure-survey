@@ -8,7 +8,7 @@ import processor_rule as P_RULE
 
 
 DOTENV.load_dotenv('.env')
-SYS.path.append('./bvisualizer')
+# SYS.path.append('./bvisualizer')
 import utils.general_helper as H
 
 
@@ -116,17 +116,26 @@ def sort_thrd_depth(rule):
   )
 
 
-def construct_lib_specific_fnc_to_struct_correspondence(lib_number):
+def construct_fnc_to_struct_correspondence(struct_lib):
   """
-  -- choose the libriry specified by `lib_number`
+  -- choose the library specified by `struct_lib_number`
   """
+  struct_lib_number, _ = struct_lib
   return lambda bench_case: [
-    list(map(lambda x: x, H.last(bench_case)[lib_number]))
+    list(map(lambda x: x, H.last(bench_case)[struct_lib_number]))
   ]
 
 
-def construct_fnc_specific_struct_to_fnc_correspondence(fnc_number):
-  pass
+# ... coming soon
+def construct_struct_to_fnc_correspondence(fnc_lib):
+  """
+  -- choose the function specified by `fnc_lib_name`
+  """
+  fnc_lib_number, fnc_lib_name = fnc_lib
+  return lambda bench_case: [
+    P_RULE.rule_fnc(bench_case),
+    H.last(bench_case)
+  ]
 
 
 def destruct_list(l): 
@@ -163,6 +172,6 @@ def extract_label(ruled_list):
 
 def set_label(final_matrix):
   return lambda label_list: {
-      str(label_list[i]): final_matrix[i] 
-      for i in range(len(final_matrix))
-    }
+    str(label_list[i]): final_matrix[i] 
+    for i in range(len(final_matrix))
+  }
