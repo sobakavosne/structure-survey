@@ -52,5 +52,3 @@ STRUCTURE_TO_FUNCTION = [
     ]
   } for fnc_lib_number, fnc_lib_name in FUNCTION_LIBRARIES
 ]
-
-H.trace(FUNCTION_TO_STRUCTURE)
