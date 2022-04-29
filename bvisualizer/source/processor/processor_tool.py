@@ -10,7 +10,7 @@ import utils.general_helper as H
 
 DOTENV.load_dotenv('.env')
 
-N_LIST_LOG_DIR = OS.getenv('N_LIST_LOG_DIR')
+N_LIST_DATA_DIR = OS.getenv('N_LIST_DATA_DIR')
 
 # Make sure the order of an occurrence of the structure 
 # libraries in `makeNumListSuiteMatrixList` function is the same
@@ -31,7 +31,7 @@ FUNCTION_LIBRARIES = H.compose(enumerate, sorted)(['Ramda', 'C++'])
 FUNCTION_TO_STRUCTURE = [
   {
     struct_lib_name: P.run_fnc_to_struct_processor_IO(
-      N_LIST_LOG_DIR, 
+      N_LIST_DATA_DIR, 
       struct_lib_number
     )
   } for struct_lib_number, struct_lib_name in enumerate(STRUCTURE_LIBRARIES)
@@ -44,7 +44,7 @@ STRUCTURE_TO_FUNCTION = [
     fnc_lib_name: [
       {
         struct_lib_name: P.run_struct_to_fnc_processor_IO(
-          N_LIST_LOG_DIR,
+          N_LIST_DATA_DIR,
           struct_lib_number,
           fnc_lib_number
         )

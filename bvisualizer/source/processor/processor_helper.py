@@ -14,7 +14,7 @@ import utils.general_helper as H
 
 PATTERN = RE.compile("\s+(\S+)\s+", RE.IGNORECASE)
 DELIMITER = OS.getenv('DELIMITER')
-N_LIST_LOG_DIR = OS.getenv('N_LIST_LOG_DIR')
+N_LIST_DATA_DIR = OS.getenv('N_LIST_DATA_DIR')
 
 
 def read_directoryIO(dir): return H.head([x[2] for x in OS.walk(dir)])
@@ -26,7 +26,7 @@ def construct_wrapped_data_list(l):
   """
   return map(lambda file_name: [
     JSON.loads(file_name),
-    open(OS.path.join(N_LIST_LOG_DIR, file_name))
+    open(OS.path.join(N_LIST_DATA_DIR, file_name))
   ], l)
 
 
