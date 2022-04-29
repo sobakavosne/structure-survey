@@ -116,26 +116,26 @@ def sort_thrd_depth(rule):
   )
 
 
-def construct_fnc_to_struct_correspondence(struct_lib):
+def extract_struct_lib_specific_bench_FTS(struct_lib_number):
   """
   -- choose the library specified by `struct_lib_number`
   """
-  struct_lib_number, _ = struct_lib
   return lambda bench_case: [
     list(map(lambda x: x, H.last(bench_case)[struct_lib_number]))
   ]
 
 
-# ... coming soon
-def construct_struct_to_fnc_correspondence(fnc_lib):
+def extract_struct_lib_specific_bench_STF(struct_lib_number):
   """
-  -- choose the function specified by `fnc_lib_name`
+  -- choose the library specified by `struct_lib_number`
   """
-  fnc_lib_number, fnc_lib_name = fnc_lib
-  return lambda bench_case: [
-    P_RULE.rule_fnc(bench_case),
-    H.last(bench_case)
-  ]
+  return lambda bench_case: H.compose(
+    int,
+    H.last, 
+    H.stringify_list_elements,
+    H.specific(struct_lib_number), 
+    H.last
+  )(bench_case)
 
 
 def destruct_list(l): 
@@ -165,7 +165,7 @@ def remove_zero_entry_data(l):
 
 def extract_label(ruled_list):
   return map(
-      H.compose(P_RULE.rule_fnc_lib, H.head, H.head, H.head), 
+      H.compose(P_RULE.rule_lib, H.head, H.head, H.head), 
       H.list_it(ruled_list)
     )
 
@@ -175,3 +175,7 @@ def set_label(final_matrix):
     str(label_list[i]): final_matrix[i] 
     for i in range(len(final_matrix))
   }
+
+
+def execute_lib_number_rule(lib_number): 
+  return lambda l: P_RULE.rule_lib_number(l, lib_number)

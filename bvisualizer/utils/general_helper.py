@@ -3,7 +3,8 @@ import functools as F
 
 
 def trace(x, *comments):
-  print(x, comments) if comments else P.pprint(x)
+  P.pprint(x)
+  P.pprint(comments) if comments else None
   return x
 
 
@@ -11,6 +12,9 @@ def filter_empty_list(l): return list(filter(lambda x: len(x) != 0, l))
 
 
 def head(l): return l[0]
+
+
+def specific(index): return lambda l: l[index]
 
 
 def last(l): return l[-1]
@@ -29,3 +33,9 @@ def list_it(l):
 
 
 def double_list(l): return [l, l]
+
+
+def wrap_list(l): return [l]
+
+
+def stringify_list_elements(l): return list(map(str, l))

@@ -17,34 +17,40 @@ N_LIST_LOG_DIR = OS.getenv('N_LIST_LOG_DIR')
 # as in STRUCTURE_LIBRARIES list. The source is the following:
 # ~/source/struct-master/bench-suite/suite.generator.handler.js.
 # The order is determined by the order of calling of the `add` 
-# function, because of the synchronicity.
+# function, because of the synchronicity
 
-STRUCTURE_LIBRARIES = ['MORI', 'LAZY', 'NATIVE', 'IMMUTABLE']
+STRUCTURE_LIBRARIES = ['Mori', 'Lazy', 'Native', 'Immutable']
 
 # FUNCTION_LIBRARIES list has no order and will be sorted alphabetically
+# (as well as inside the data processor)
 
-FUNCTION_LIBRARIES = ['Ramda', 'C++']
+FUNCTION_LIBRARIES = H.compose(enumerate, sorted)(['Ramda', 'C++'])
 
-# Find a dependence on function implementation for each structure.
+# Find a dependence on function implementation for each structure
 
-FNC_TO_STRUCT = [
+FUNCTION_TO_STRUCTURE = [
   {
-    struct_lib: P.run_fnc_to_struct_processor_IO(
+    struct_lib_name: P.run_fnc_to_struct_processor_IO(
       N_LIST_LOG_DIR, 
-      struct_lib
+      struct_lib_number
     )
-  } for struct_lib in enumerate(STRUCTURE_LIBRARIES)
+  } for struct_lib_number, struct_lib_name in enumerate(STRUCTURE_LIBRARIES)
 ]
 
-# Find a dependence on structure library or implementation for each function.
+# Find a dependence on structure library or implementation for each function
 
-STRUCT_TO_FNC = [
+STRUCTURE_TO_FUNCTION = [
   {
-    fnc_lib: P.run_struct_to_fnc_processor_IO(
-      N_LIST_LOG_DIR, 
-      fnc_lib
-    )
-  } for fnc_lib in H.compose(enumerate, sorted)(FUNCTION_LIBRARIES)
+    fnc_lib_name: [
+      {
+        struct_lib_name: P.run_struct_to_fnc_processor_IO(
+          N_LIST_LOG_DIR,
+          struct_lib_number,
+          fnc_lib_number
+        )
+      } for struct_lib_number, struct_lib_name in enumerate(STRUCTURE_LIBRARIES)
+    ]
+  } for fnc_lib_number, fnc_lib_name in FUNCTION_LIBRARIES
 ]
 
-H.trace(STRUCT_TO_FNC)
+H.trace(FUNCTION_TO_STRUCTURE)

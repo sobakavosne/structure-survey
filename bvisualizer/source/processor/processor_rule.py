@@ -3,15 +3,12 @@ import sys as SYS
 import utils.general_helper as H
 
 
-rule_lib = lambda struct_case: H.head(struct_case)['lib']
+rule_lib        = lambda struct_case: H.head(struct_case)['lib']
 
-rule_fnc = lambda struct_case: H.head(struct_case)['fnc']
+rule_fnc        = lambda struct_case: H.head(struct_case)['fnc']
 
-rule_iter = lambda struct_case: H.head(struct_case)['iter']
+rule_iter       = lambda struct_case: H.head(struct_case)['iter']
 
-rule_size = lambda struct_case: H.head(struct_case)['size']
+rule_size       = lambda struct_case: H.head(struct_case)['size']
 
-rule_fnc_lib = lambda struct_case: { 
-  'fnc': H.head(struct_case)['fnc'], 
-  'lib': H.head(struct_case)['lib'] 
-}
+rule_lib_number = lambda l, lib_number: [l[lib_number]]

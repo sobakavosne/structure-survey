@@ -20,14 +20,13 @@ def run_fnc_to_struct_processor_IO(log_dir, struct_lib_number):
   )(log_dir)
 
 
-def run_struct_to_fnc_processor_IO(log_dir, fnc_lib):
+def run_struct_to_fnc_processor_IO(log_dir, struct_lib_number, fnc_lib_number):
   """
   -- construct `structure to function` relation
   -- the relation shows the effect of the structure implemention
-  # returns list of type [{"{'fnc': FNC, 'lib': LIB }": [[speed]]}]
+  returns list of type [{FNC_LIBRARY: {"{'fnc': FNC_NAME, 'lib': FNC_LIBRARY }": [[speed]]}}]
   """
   return H.compose(
-    # P_HANDLER.set_case_label,
-    P_HANDLER.construct_struct_to_fnc_case(fnc_lib),
+    P_HANDLER.construct_struct_to_fnc_case(struct_lib_number, fnc_lib_number),
     P_HANDLER.prepare_bench_data_IO
   )(log_dir)
