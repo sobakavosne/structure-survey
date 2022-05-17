@@ -1,29 +1,39 @@
-Structure survey
+Structure survey: loading testing for structures
 
-Loading testing for structures: Native JS, Immutable.js, Mori.js, Lazy.js
+Structure implementation:
 
-Structures' implementation:
+• Mori.js List
+• Lazy.js Sequence
+• Immutable.js Sequence 
+• Native structure - JS Array
 
-- Mori.js List
-- Lazy.js Sequence
-- Immutable.js Sequence 
-- Native structure - JS Array
+Functions implementation:
 
-Functions' implementation:
-
-- Ramda 
-- Lodash
-- Native JS
-- C++ addons
+• Ramda 
+• Lodash
+• Native JS
+• C++ addons
 
 Requirements: node-gyp
 
-Configuration explained:
+Configuration:
 
-DELIMITER=<>              # Start of each string 
+  DELIMITER=<>              • Start of each string 
 
-STRUCT_MAX=1000000        # Maximum structure size
-STRUCT_STEP=100000        # Structure step decrement
+  STRUCT_MAX=1000           • Maximum structure size
+  STRUCT_STEP=100           • Structure step decrement
 
-ITER_MAX=2                # Maximum structure size
-ITER_STEP=1               # Structure step decrement
+  ITER_MAX=10               • Maximum iteration value
+  ITER_STEP=1               • Structure iteration decrement
+
+  N_LIST_DATA_DIR           • Generated data directory 
+
+! Do not use meaningless values: there is no time to implement constraints.
+
+Extention:
+
+! To extend the survey make sure the order of an occurrence of the structure 
+libraries in 'makeNumListSuiteMatrixList' function is the same as in 
+STRUCTURE_LIBRARIES list. The source is the following:
+'~/source/struct-master/bench-suite/suite.generator.handler.js'.
+The order is determined by the order of calling of the 'add' function.

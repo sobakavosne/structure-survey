@@ -1,0 +1,12 @@
+{
+  "STRUCTURE_LIBRARIES": [
+    "Mori",
+    "Lazy",
+    "Native",
+    "Immutable"
+  ],
+  "FUNCTION_LIBRARIES": [
+    "Ramda",
+    "C++"
+  ]
+}

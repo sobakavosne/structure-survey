@@ -8,7 +8,8 @@ def trace(x, *comments):
   return x
 
 
-def filter_empty_list(l): return list(filter(lambda x: len(x) != 0, l))
+def filter_empty_list(l): 
+  return list(filter(lambda x: len(x) != 0, l))
 
 
 def head(l): return l[0]
@@ -21,7 +22,11 @@ def last(l): return l[-1]
 
 
 def compose(*fns):
-  return F.reduce(lambda f, g: lambda x: f(g(x)), fns, lambda x: x)
+  return F.reduce(
+    lambda f, g: lambda x: f(g(x)), 
+    fns, 
+    lambda x: x
+  )
 
 
 def list_it(l):
@@ -39,3 +44,7 @@ def wrap_list(l): return [l]
 
 
 def stringify_list_elements(l): return list(map(str, l))
+
+
+def map_object_keys(fnc, obj):
+  return list(map(lambda key: {key: fnc(obj[key])}, obj.keys()))

@@ -1,5 +1,6 @@
 import os as OS
 import sys as SYS
+import json as JSON
 import dotenv as DOTENV
 
 
@@ -12,12 +13,12 @@ DOTENV.load_dotenv('.env')
 
 N_LIST_DATA_DIR = OS.getenv('N_LIST_DATA_DIR')
 
-# Make sure the order of an occurrence of the structure 
-# libraries in `makeNumListSuiteMatrixList` function is the same
-# as in STRUCTURE_LIBRARIES list. The source is the following:
+# Make sure the order of an occurrence of the structure libraries 
+# in `makeNumListSuiteMatrixList` function is the same as in 
+# STRUCTURE_LIBRARIES list. The source is the following:
 # ~/source/struct-master/bench-suite/suite.generator.handler.js.
 # The order is determined by the order of calling of the `add` 
-# function, because of the synchronicity
+# function
 
 STRUCTURE_LIBRARIES = ['Mori', 'Lazy', 'Native', 'Immutable']
 
@@ -52,3 +53,5 @@ STRUCTURE_TO_FUNCTION = [
     ]
   } for fnc_lib_number, fnc_lib_name in FUNCTION_LIBRARIES
 ]
+
+H.trace(FUNCTION_TO_STRUCTURE)
