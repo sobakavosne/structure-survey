@@ -1,0 +1,4 @@
+matplotlib==3.5.3
+numpy==1.23.3
+python-dotenv==0.21.0
+varname==0.9.0

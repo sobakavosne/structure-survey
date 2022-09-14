@@ -133,10 +133,10 @@ Part #5.  Evaluation
     ...
     const listSuiteConstructorIO =
     ...
-              .add('Mori       ', () => MORI.intoArray(SG_HANDLER.repeatMoriMap(iterations, DS.M_LIST, fnc)))
-              .add('Lazy       ', () => SG_HANDLER.repeatMap(iterations, DS.L_LIST, fnc).toArray())
-              .add('Native     ', () => SG_HANDLER.repeatMap(iterations, DS.N_LIST, fnc))
-              .add('Immutable  ', () => SG_HANDLER.repeatMap(iterations, DS.I_LIST, fnc).toArray())
+              .add('Mori       ', () => MORI.intoArray(SG_HELPER.repeatMoriMap(iterations, DS.M_LIST, fnc)))
+              .add('Lazy       ', () => SG_HELPER.repeatMap(iterations, DS.L_LIST, fnc).toArray())
+              .add('Native     ', () => SG_HELPER.repeatMap(iterations, DS.N_LIST, fnc))
+              .add('Immutable  ', () => SG_HELPER.repeatMap(iterations, DS.I_LIST, fnc).toArray())
     ...
   ```
 
