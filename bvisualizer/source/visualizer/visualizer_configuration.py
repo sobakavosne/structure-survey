@@ -25,10 +25,13 @@ AXES = FIGURE.add_subplot(projection='3d')
 PLT.style.use([PLT.style.available[0]])
 MPL.rcParams['font.size'] = 8
 MPL.rcParams['axes.edgecolor'] = 'black'
-AXES.set_xlabel('x', labelpad=5)
-AXES.set_ylabel('y', labelpad=5)
-AXES.set_zlabel('z', labelpad=5)
 
+COLOR_MAPS = iter([
+  PLT.cm.viridis, PLT.cm.plasma, PLT.cm.inferno, PLT.cm.magma, PLT.cm.cividis,
+  PLT.cm.Greys, PLT.cm.Purples, PLT.cm.Blues, PLT.cm.Greens, PLT.cm.Oranges, PLT.cm.Reds,
+  PLT.cm.YlOrBr, PLT.cm.YlOrRd, PLT.cm.OrRd, PLT.cm.PuRd, PLT.cm.RdPu, PLT.cm.BuPu,
+  PLT.cm.GnBu, PLT.cm.PuBu, PLT.cm.YlGnBu, PLT.cm.PuBuGn, PLT.cm.BuGn, PLT.cm.YlGn
+])
 
 X_AXIS = NP.arange(
   ITER_STEP, 

@@ -5,5 +5,9 @@
     "optional": "cpp",
     "sstream": "cpp",
     "iostream": "cpp"
-  }
+  },
+  "python.analysis.extraPaths": [
+    "./bvisualizer/source/visualizer",
+    "./bvisualizer/source/processor"
+  ]
 }

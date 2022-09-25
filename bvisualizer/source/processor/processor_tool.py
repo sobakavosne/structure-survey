@@ -26,7 +26,7 @@ STRUCTURE_LIBRARIES = ['Mori', 'Lazy', 'Native', 'Immutable']
 
 FUNCTION_LIBRARIES = H.compose(enumerate, sorted)(['Ramda', 'C++'])
 
-# Find a dependence on function implementation for each structure
+# Find a correlation between function implementation and each structure
 
 FUNCTION_TO_STRUCTURE = [
   {
@@ -37,7 +37,7 @@ FUNCTION_TO_STRUCTURE = [
   } for struct_lib_number, struct_lib_name in enumerate(STRUCTURE_LIBRARIES)
 ]
 
-# Find a dependence on structure library or implementation for each function
+# Find a correlation between structure library or implementation and each function
 
 STRUCTURE_TO_FUNCTION = [
   {
@@ -52,5 +52,3 @@ STRUCTURE_TO_FUNCTION = [
     ]
   } for fnc_lib_number, fnc_lib_name in FUNCTION_LIBRARIES
 ]
-
-H.trace(FUNCTION_TO_STRUCTURE)
