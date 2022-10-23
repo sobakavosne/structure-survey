@@ -9,5 +9,6 @@
   "python.analysis.extraPaths": [
     "./bvisualizer/source/visualizer",
     "./bvisualizer/source/processor"
-  ]
+  ],
+  "python.analysis.typeCheckingMode": "off"
 }

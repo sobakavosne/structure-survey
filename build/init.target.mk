@@ -41,13 +41,13 @@ CFLAGS_CC_Debug := \
 	-std=gnu++1y
 
 INCS_Debug := \
-	-I/home/dm/.cache/node-gyp/14.20.0/include/node \
-	-I/home/dm/.cache/node-gyp/14.20.0/src \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/openssl/config \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/openssl/openssl/include \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/uv/include \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/zlib \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/v8/include \
+	-I/home/dm/.cache/node-gyp/12.22.12/include/node \
+	-I/home/dm/.cache/node-gyp/12.22.12/src \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/openssl/config \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/openssl/openssl/include \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/uv/include \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/zlib \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/v8/include \
 	-I/home/dm/dev/javascript/structure-survey/node_modules/node-addon-api
 
 DEFS_Release := \
@@ -86,13 +86,13 @@ CFLAGS_CC_Release := \
 	-std=gnu++1y
 
 INCS_Release := \
-	-I/home/dm/.cache/node-gyp/14.20.0/include/node \
-	-I/home/dm/.cache/node-gyp/14.20.0/src \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/openssl/config \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/openssl/openssl/include \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/uv/include \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/zlib \
-	-I/home/dm/.cache/node-gyp/14.20.0/deps/v8/include \
+	-I/home/dm/.cache/node-gyp/12.22.12/include/node \
+	-I/home/dm/.cache/node-gyp/12.22.12/src \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/openssl/config \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/openssl/openssl/include \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/uv/include \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/zlib \
+	-I/home/dm/.cache/node-gyp/12.22.12/deps/v8/include \
 	-I/home/dm/dev/javascript/structure-survey/node_modules/node-addon-api
 
 OBJS := \

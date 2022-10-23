@@ -5,7 +5,10 @@ const FS = require('fs')
  */
 const clearTmpDirIO =
   (...tmpDirs) =>
-    tmpDirs.map(tmpDir => FS.rmSync(tmpDir, { recursive: true, force: true }), () => tmpDirs)
+    tmpDirs.map(
+      tmpDir => FS.rmdirSync(tmpDir, { recursive: true, force: true }),
+      () => tmpDirs
+    )
 
 module.exports = {
   clearTmpDirIO
