@@ -1,5 +1,4 @@
 # lambda rules for data unit
-import sys as SYS
 import utils.general_helper as H
 
 

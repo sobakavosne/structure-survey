@@ -1,1 +1,3 @@
-Processor: data → list of matrices
+Processor: log data → list of matrices
+
+$> python3 bvisualizer/source/processor/processor_tool.py

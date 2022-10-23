@@ -10,7 +10,7 @@ def run_fnc_to_struct_processor_IO(log_dir, struct_lib_number):
   """
   return H.compose(
     P_HANDLER.set_case_label,
-    P_HANDLER.construct_fnc_to_struct_case(struct_lib_number),
+    P_HANDLER.construct_fnc_to_struct_case(struct_lib_number, log_dir),
     P_HANDLER.prepare_bench_data_IO
   )(log_dir)
 

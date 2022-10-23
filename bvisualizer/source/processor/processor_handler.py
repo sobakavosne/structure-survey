@@ -7,24 +7,19 @@ import processor_helper as P_HELPER
 import utils.general_helper as H
 
 
-DOTENV.load_dotenv('.env')
-
-N_LIST_DATA_DIR = OS.getenv('N_LIST_DATA_DIR')
-
-
 def prepare_bench_data_IO(log_dir):
   return H.compose(
     P_HELPER.filter_test_results,
     P_HELPER.extract_test_results,
     P_HELPER.unwrap_data,
-    P_HELPER.construct_wrapped_data_list,
+    P_HELPER.construct_wrapped_data_list(log_dir),
     P_HELPER.read_directoryIO,
   )(log_dir)
 
 
-def construct_fnc_to_struct_case(struct_lib_number):
+def construct_fnc_to_struct_case(struct_lib_number, log_dir):
   return lambda prepared_list: H.compose(
-    lambda final_matrix: [final_matrix, prepare_bench_data_IO(N_LIST_DATA_DIR)],
+    lambda final_matrix: [final_matrix, prepare_bench_data_IO(log_dir)],
     H.list_it,
     P_HELPER.map_frst_depth(P_HELPER.remove_zero_entry_data),
     P_HELPER.map_scnd_depth(P_HELPER.remove_zero_entry_data),

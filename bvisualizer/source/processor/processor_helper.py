@@ -1,6 +1,5 @@
 import re as RE
 import os as OS
-import sys as SYS
 import json as JSON
 import dotenv as DOTENV
 import itertools as I
@@ -12,19 +11,19 @@ DOTENV.load_dotenv('.env')
 
 PATTERN = RE.compile("\s+(\S+)\s+", RE.IGNORECASE)
 DELIMITER = OS.getenv('DELIMITER')
-N_LIST_DATA_DIR = OS.getenv('N_LIST_DATA_DIR')
 
 
-def read_directoryIO(dir): return H.head([x[2] for x in OS.walk(dir)])
+def read_directoryIO(dir): 
+  return H.head([x[2] for x in OS.walk(dir)])
 
 
-def construct_wrapped_data_list(l):
+def construct_wrapped_data_list(log_dir):
   """
   returns [[FILE_NAME, WRAPPED_DATA]]
   """
-  return map(lambda file_name: [
+  return lambda l: map(lambda file_name: [
     JSON.loads(file_name),
-    open(OS.path.join(N_LIST_DATA_DIR, file_name))
+    open(OS.path.join(log_dir, file_name))
   ], l)
 
 
@@ -68,7 +67,8 @@ def group_bench_cases(rule):
   ]
 
 
-def map_frst_depth(fnc): return lambda l: map(fnc, l)
+def map_frst_depth(fnc): 
+  return lambda l: map(fnc, l)
 
 
 def map_scnd_depth(fnc):
