@@ -1,1 +1,3 @@
 Benchmark visualizer: logs → processor → visualizer → model
+
+$> python3 bvisualizer/source/bvisualizer.py

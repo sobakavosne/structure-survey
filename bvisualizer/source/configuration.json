@@ -6,7 +6,10 @@
     "Immutable"
   ],
   "FUNCTION_LIBRARIES": [
+    "C++",
+    "Lodash",
+    "Native",
     "Ramda",
-    "C++"
+    "Underscore"
   ]
 }
