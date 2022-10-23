@@ -39,13 +39,13 @@ const repeatMoriMap =
  */
 const whenFlagWriteFile =
   (isFile, data, fncName, lib, iterations, structSize, specificity) => isFile
-    ? FS.existsSync(SG_STR_BUILDER.logDirBuilder(require.main.path, specificity))
+    ? FS.existsSync(SG_STR_BUILDER.logDirBuilder(require.main.path, specificity, fncName))
       ? FS.writeFileSync(
         SG_STR_BUILDER.logFileNameBuilder(require.main.path, fncName, lib, iterations, structSize, specificity),
         data,
         { flag: 'as' }
       ) : M.IO(
-        () => FS.mkdirSync(SG_STR_BUILDER.logDirBuilder(require.main.path, specificity), { recursive: true })
+        () => FS.mkdirSync(SG_STR_BUILDER.logDirBuilder(require.main.path, specificity, fncName), { recursive: true })
       ).takeRight(
         M.IO(
           () => FS.writeFileSync(

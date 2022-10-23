@@ -2,7 +2,6 @@ const R = require('ramda')
 const H = require('../../../utils/general.helper')
 const ENV = H.eitherObjValuesToNumber(require('dotenv').config().parsed)
 const SG_HANDLER = require('./suite.generator.handler')
-const [STRUCT_MAX, STRUCT_STEP] = H.eitherListValuesToNumber(process.argv.slice(2))
 
 /**
  * Construct **`Benchmark Suite`**'s with mapping over structures of different `k` sizes `n` times
@@ -19,12 +18,12 @@ const [STRUCT_MAX, STRUCT_STEP] = H.eitherListValuesToNumber(process.argv.slice(
  * @returns {Array<Array<Benchmark.Suite>>}
  */
 const numListSuiteIO =
-  (fnc, fncName, lib, isFile) =>
+  (fnc, fncName, lib, isFile = true) =>
     R.pipe(
       SG_HANDLER.makeMatrixList,
       SG_HANDLER.makeNumListSuiteMatrixList(fnc, fncName, lib, isFile, ENV.DELIMITER),
       SG_HANDLER.runSuiteMatrixList
-    )(ENV.ITER_MAX, ENV.ITER_STEP, STRUCT_MAX, STRUCT_STEP)
+    )(ENV.ITER_MAX, ENV.ITER_STEP, ENV.STRUCT_MAX, ENV.STRUCT_STEP)
 
 module.exports = {
   numListSuiteIO
