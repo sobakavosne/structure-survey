@@ -50,7 +50,7 @@ def filter_test_results(l):
     H.head(bench_case),
     list(map(lambda lib_case: [
       H.head(lib_case),
-      int(H.last(lib_case).replace(',', ''))],
+      int(H.head(H.last(lib_case).replace(',', '').split('.')))],
       H.last(bench_case)))
   ], l)
 
