@@ -45,7 +45,10 @@ const whenFlagWriteFile =
         data,
         { flag: 'as' }
       ) : M.IO(
-        () => FS.mkdirSync(SG_STR_BUILDER.logDirBuilder(require.main.path, specificity, fncName), { recursive: true })
+        () => FS.mkdirSync(
+          SG_STR_BUILDER.logDirBuilder(require.main.path, specificity, fncName),
+          { recursive: true }
+        )
       ).takeRight(
         M.IO(
           () => FS.writeFileSync(

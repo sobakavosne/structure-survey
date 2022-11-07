@@ -1,5 +1,4 @@
 const L = require('lazy.js')
-const R = require('ramda')
 const I = require('immutable')
 const MORI = require('mori')
 
@@ -32,7 +31,7 @@ const constructNumNList =
  */
 const constructNumLList =
   (structureSize) =>
-    L.generate(R.identity).first(structureSize)
+    L.generate(x => x).first(structureSize)
 
 module.exports = {
   constructNumIList,
