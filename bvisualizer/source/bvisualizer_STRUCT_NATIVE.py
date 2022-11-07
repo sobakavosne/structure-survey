@@ -1,5 +1,11 @@
+import os as OS
 import sys as SYS
 import numpy as NP
+import dotenv as DOTENV
+
+
+DOTENV.load_dotenv('.env')
+STRUCT_MAX = int(OS.getenv('STRUCT_MAX'))
 
 SYS.path.append('./bvisualizer')
 SYS.path.append('./bvisualizer/source/visualizer')
@@ -21,4 +27,5 @@ VISUALIZER.construct_model(N_LODASH_CORRELATION, 'Lodash')
 VISUALIZER.construct_model(N_RAMDA_CORRELATION, 'Ramda')
 VISUALIZER.construct_model(N_NATIVE_CORRELATION, 'Native')
 
+VISUALIZER.CFG.PLT.title(f'Native structure of max size {STRUCT_MAX} to functions')
 VISUALIZER.CFG.PLT.show()

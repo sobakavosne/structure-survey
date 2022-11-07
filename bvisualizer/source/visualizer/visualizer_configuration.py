@@ -26,9 +26,9 @@ PLT.style.use([PLT.style.available[0]])
 MPL.rcParams['font.size'] = 8
 MPL.rcParams['axes.edgecolor'] = 'black'
 
-AXES.set_xlabel('Iteration', labelpad=5)
-AXES.set_ylabel('Structure size', labelpad=5)
-AXES.set_zlabel('Operation/sec', labelpad=15)
+AXES.set_xlabel('Iteration, num', labelpad=5)
+AXES.set_ylabel('Structure size, item', labelpad=5)
+AXES.set_zlabel('Rate, op/sec', labelpad=15)
 
 COLOR_MAPS = iter([
   PLT.cm.Greys, PLT.cm.Purples, PLT.cm.Blues, PLT.cm.Greens, PLT.cm.Oranges, PLT.cm.Reds,
